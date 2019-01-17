@@ -35,4 +35,4 @@ FLASK_APP=run.py flask run
 ```
 
 ## Log erstellen
-git log --stat > crud.log
+git log --stat > spa.log

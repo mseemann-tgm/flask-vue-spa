@@ -32,12 +32,41 @@ CORS ermöglicht es die Sicherheitseinschränkungen der SOP in definierten Fäll
 #### Testing
 
 ##### Welche Tools würden Sie einsetzen, und wie würden die entsprechenden Konfigurationsdateien aussehen? Erstellen Sie ein Konzept!
+- Ich würde Tox, Cypress, Pytest und TravisCi zum ausführen verwenden.
 
+- Durch Tox können die Pytests Lokal ausgeführt werden
+- Durch TravisCi können die Pytests automatisch bei jedem Push ausgeführt werden
+- Durch Cypress kann die graphische Oberfläche getestet werden
+ 
+- Cypress
+ wird installiert mit ``npm install cypress``
+ kann mit tox ausgeführt werden --> tox.ini 
+ 
+ ``[tox] envlist = py36, cypress-dashboard, cypress-explore, eslint``
+ 
+- Pytest
+ Pytests müssen in einer Test Klasse geschrieben werden
+ Danach in der tox.ini folgende hinzufügen, dasss sie ausgeführt werden können
+ ``[pytest]
+ testpaths = testing/pytest
+ python_files = test_'.py
+ python_classes = Test``
+ 
+- Anschließend kann dies auf TravisCi gepusht werden wo das Projekt cloud-basiert integriert werden.
 ##### Bereiten Sie einen einfachen Test für den Aufruf der Random Funktion vor. Wie würden Sie diesen starten?
 
 ##### Implementieren Sie einen einfachen grafischen Test. Worauf achten Sie dabei?
 
 ##### Definieren Sie eine Konfiguration mit TravisCI für eine kontinuierliche Integration. Was müssen Sie dabei für die Python Tests und was für die grafischen Tests vorsehen?
+Es muss ein travis.yml File erstellt werden.
+- mit folgendem Inhalt für die pytests
+ 
+ ``- stage: Tox Test name: "Unit Tests" language: python python: - 3.6 install: pip install tox-travis script: tox``
+ 
+- und folgendem Inhalt für Cypress:
+ 
+ ``- stage: Cypress Test name: "End to End testing Cypress" language: node_js node_js: - 10 cache: npm: true directories: - ~/.npm - ~/.cache - node_modules node_js: - '8' install: - cd src/router - npm ci script: - npm run cy:run``
 
 ##### Welche Tests würden Sie für die Grenzen der Random Funktion vorsehen?
-
+Die Grenzen der Random Funktion können mit pytests welche von tox oder travis ausgeführt werden getestet werden.
+So kann die Obergrenze und Untergrenze einfach überprüft werden.

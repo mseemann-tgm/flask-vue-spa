@@ -52,15 +52,30 @@ envlist = py36, cypress-dashboard, cypress-explore, eslint
 - Pytest
  Pytests müssen in einer Test Klasse geschrieben werden
  Danach in der tox.ini folgende hinzufügen, dasss sie ausgeführt werden können
- ``[pytest]
+```
+[pytest]
  testpaths = testing/pytest
  python_files = test_'.py
  python_classes = Test``
- 
+```
 - Anschließend kann dies auf TravisCi gepusht werden wo das Projekt cloud-basiert integriert werden.
 ##### Bereiten Sie einen einfachen Test für den Aufruf der Random Funktion vor. Wie würden Sie diesen starten?
+- Es wird ein Test in für die Random Funktion vorbereitet. Im testrandomFunction.py Testfile wird ein Test erstellt der prüft ob
+der Status code des Server = 200 ist was bedeutet alles funktioniert soweit ohne Fehler.
+````
+import pytest
+from run import app
 
+@pytest.fixture
+def client(request):
+    test_client = app.test_client()
+    return test_client
 
+def testaufrufRandom(client):
+    res = client.get('/api/random')
+    assert res.status_code == 200
+````
+- Dies kann mit tox oder mit ``pytest testrandomFunction.py`` ausgeführt werden.
 ##### Implementieren Sie einen einfachen grafischen Test. Worauf achten Sie dabei?
 Es wird hierfür im cypress->integration Ordner ein neuer Ordner names frontend erstellt
 In diesem wird ein test_homepage.js erstellt.

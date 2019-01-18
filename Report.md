@@ -18,13 +18,24 @@ Außerdem muss in der index.js Datei root importiert werden und als Route hinzug
 ```
 
 ##### Ermöglichen Sie die einfache Erweiterung der grafischen Oberfläche und beschreiben Sie notwendige Schritte um neue Komponenten zur Anmeldung oder persönlichen Definition von personenbezogenen TODOs zu ermöglichen.
-
+- Wenn man eine neue Vue Component hinzufügt ist dies bereits möglich. Desweiteren muss im index.js File eine neue Route hinzugefügt werden.
 ##### Wie würden Sie eine einfache Authentifizierung implementieren? Beschreiben Sie die notwendigen Schritte!
+- Rest Schnitstelle welcher eine Token zurückgibt (Regestrierung, Passwort)
+- Datenbank mit verschlüsselten Benutzer und Passwort
+- Wenn ein Login gemacht wird wird ein Token zurück gegeben, welcher bei jeder Abfrage im head mit übergeben wird
+
 
 #### Python Client
 
 ##### Implementieren Sie einen Client in Python, der sich mit der vorhandenen Server-Einheit verbindet und die Daten in eine eigene JSON Struktur lädt.
+Client welcher sich mit dem Server verbindet mit request abfragt und in einer Variable als JSON speichert.
 
+```
+    import json
+    import requests
+    data = requests.get("http://127.0.0.0:8080/todo")
+    datajson = json.loads(data.text)
+```
 
 ##### Was würden Sie bei der Server-API anders definieren, damit verschiedene Clients auf die angebotenenen Funktionen zugreifen könnten?
 - Hierfür muss Cors verwendet werden. Cors wird wie folgt in der App.py aktiviert ``# enable CORS CORS(app)`` 
